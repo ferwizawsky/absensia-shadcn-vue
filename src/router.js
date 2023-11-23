@@ -1,11 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useOption } from "@/stores/option";
+import { useAuth } from "@/stores/auth";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: () => import("./components/HelloWorld.vue"),
+    meta: {
+      public: true,
+    },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("./pages/login.vue"),
+    meta: {
+      public: true,
+    },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("./pages/register.vue"),
+    meta: {
+      public: true,
+    },
   },
 ];
 const router = createRouter({
@@ -15,16 +35,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.name + " | " + useOption().name;
-  const token = localStorage.getItem("token");
-  // const role = localStorage.getItem("role_id");
+  const token = useAuth().token;
 
-  // if (to.name == "Login" && token) {
-  //   if (role == "2") next("/dash");
-  //   else next("/");
-  // }
-  //   if (to.name != "Login" && !token) next("/login");
-  //   else next();
-  console.log(to);
+  if (!to.meta?.public && !token) {
+    next("/login");
+  }
+  console.log(token);
   next();
 });
 

@@ -7,9 +7,8 @@ const data = ref();
 
 onMounted(() => {
   // console.log(import.meta.env.VITE_API);
-  data.value = useFetch(
-    "/dash-masyarakat/get-all-ranmor?status=ditemukan&limit=10&page=1&filter="
-  );
+  // data.value =useFetch();
+  // "/dash-masyarakat/get-all-ranmor?status=ditemukan&limit=10&page=1&filter="
 });
 defineProps({
   msg: String,
