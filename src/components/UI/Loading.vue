@@ -1,5 +1,5 @@
 <script setup>
-import { useNotif } from "~/stores/notif.js";
+import { useNotif } from "@/stores/notif.js";
 
 const notif = useNotif();
 </script>

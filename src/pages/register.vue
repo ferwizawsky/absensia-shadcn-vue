@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { useAuth } from "@/stores/auth.js";
 import { useNotif } from "@/stores/notif.js";
 import { onMounted, ref } from "vue";
@@ -42,31 +42,29 @@ async function login() {
 }
 </script>
 <template>
-  <div
-    class="min-h-screen bg-gray-100 border-radios px-4 lg:px-9 py-2 flex justify-center"
-  >
+  <div class="min-h-screen bg-gray-100 px-4 lg:px-9 py-2 flex justify-center">
     <div
       class="w-full mt-8 ease-in-out duration-1000"
       :class="{ '-translate-y-full': first, '-translate-y-0': !first }"
     >
-      <div class="mb-6 text-gray-600">
+      <div class="mb-10 text-gray-600">
         <!-- <Icon class="w-32 mx-auto" /> -->
+        <div>
+          <img src="/icon.svg" class="w-[80px] mx-auto" />
+        </div>
       </div>
       <div
-        class="max-w-[480px] p-10 mb-10 select-none bg-white rounded-xl filter drop-shadow-xl m-auto"
+        class="max-w-md p-10 mb-10 select-none bg-white rounded-xl filter drop-shadow-xl m-auto"
       >
         <form @submit.prevent="login()">
           <div class="text-3xl text-gray-600 font-bold text-left">
-            <div>
-              <img src="/icon.svg" class="w-[80px] mx-auto" />
+            <div class="mt-4">LOGIN</div>
+            <div class="text-base font-thin text-gray-400 mt-2">
+              Please first below to continue
             </div>
           </div>
-          <div
-            class="text-center font-semibold text-xl pt-4 text-primary tracking-wider uppercase"
-          >
-            Blogging
-          </div>
-          <div class="text-gray-400 mt-10 mb-3 text-xs">
+
+          <div class="text-gray-400 mt-4 mb-3 text-xs">
             Username<br />
             <input
               required
@@ -76,7 +74,7 @@ async function login() {
               class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
             />
           </div>
-          <div class="text-gray-400 text-xs my-3 relative" v-if="!isShow">
+          <div class="text-gray-400 text-xs my-3 relative">
             Password<br />
             <input
               :type="!isShow == 'password'"
@@ -110,7 +108,7 @@ async function login() {
             <input
               type="submit"
               class="bg-primary rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
-              value="Login"
+              value="Sign Up"
             />
           </div>
         </form>
@@ -120,6 +118,11 @@ async function login() {
                         >Privacy Policy</span
                     >
                 </div> -->
+      </div>
+
+      <div class="text-center">
+        Don't have account ?
+        <RouterLink to="/register">Register</RouterLink>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("./components/HelloWorld.vue"),
+    component: () => import("./pages/index.vue"),
     meta: {
       public: true,
     },

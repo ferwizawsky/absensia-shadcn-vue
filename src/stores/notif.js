@@ -3,6 +3,8 @@ import { ref } from "vue";
 
 export const useNotif = defineStore("notif", () => {
   const listNotif = ref([]);
+  const loading = ref(false);
+
   function make(
     text,
     opt = {
@@ -30,5 +32,5 @@ export const useNotif = defineStore("notif", () => {
     }
   }
 
-  return { listNotif, make };
+  return { listNotif, make, loading };
 });

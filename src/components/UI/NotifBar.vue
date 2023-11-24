@@ -10,7 +10,7 @@ function getClass(params) {
       tmp = "bg-blue-100 text-blue-700";
       break;
     case "danger":
-      tmp = "bg-red-100 text-red-700";
+      tmp = "bg-rose-100 text-rose-700";
       break;
     case "success":
       tmp = "bg-green-100 text-green-700";
@@ -26,7 +26,7 @@ function getClass(params) {
 </script>
 <template>
   <!-- This is an example component -->
-  <div class="max-w-lg mx-auto fixed top-3 right-3">
+  <div class="max-w-lg mx-auto fixed top-3 right-3 z-10">
     <TransitionGroup name="list" tag="ul">
       <li
         v-for="item in notif.listNotif"

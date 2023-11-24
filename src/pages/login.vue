@@ -1,7 +1,8 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { useAuth } from "@/stores/auth.js";
 import { useNotif } from "@/stores/notif.js";
+import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
 import { onMounted, ref } from "vue";
 
 const isShow = ref(false);
@@ -10,8 +11,8 @@ const auth = useAuth();
 const router = useRouter();
 const notif = useNotif();
 const formPost = ref({
-  username: "",
-  password: "",
+  username: "udeen_winter",
+  password: "udeenwinter_48",
 });
 onMounted(() => {
   // if (auth.token) {
@@ -22,19 +23,21 @@ async function login() {
   if (notif.loading) return;
   notif.loading = true;
   try {
-    const data = await useMyFetch("POST", "/auth/login", {
-      body: formPost.value,
-    });
-    // console.log(data);
-    auth.token = "Bearer " + data.token.access_token;
-    auth.refresh_token = data.token.refresh_token;
+    const { data } = await useMyFetch(
+      "POST",
+      "/auth/login",
+      jsonFormData(formPost.value)
+    );
 
-    // console.log(auth.token);
-    router.push("/admin/product");
+    console.log(data);
+    localStorage.setItem("token", data.token);
+    auth.token = data.token;
     // location.reload();
   } catch (error) {
+    console.log(error);
     notif.make("Failed to Login Check your Username or Password", {
       type: "danger",
+      delay: 4000,
     });
   } finally {
     notif.loading = false;
@@ -42,46 +45,46 @@ async function login() {
 }
 </script>
 <template>
-  <div
-    class="min-h-screen bg-gray-100 border-radios px-4 lg:px-9 py-2 flex justify-center"
-  >
+  <div class="min-h-screen bg-gray-100 px-4 lg:px-9 py-2 flex justify-center">
     <div
       class="w-full mt-8 ease-in-out duration-1000"
       :class="{ '-translate-y-full': first, '-translate-y-0': !first }"
     >
-      <div class="mb-6 text-gray-600">
+      <div class="mb-10 text-gray-600">
         <!-- <Icon class="w-32 mx-auto" /> -->
+        <div>
+          <img src="/icon.svg" class="w-[80px] mx-auto" />
+        </div>
       </div>
       <div
-        class="max-w-[480px] p-10 mb-10 select-none bg-white rounded-xl filter drop-shadow-xl m-auto"
+        class="max-w-md p-10 mb-10 select-none bg-white rounded-xl filter drop-shadow-xl m-auto"
       >
         <form @submit.prevent="login()">
           <div class="text-3xl text-gray-600 font-bold text-left">
-            <div>
-              <img src="/icon.svg" class="w-[80px] mx-auto" />
+            <div class="mt-4">LOGIN</div>
+            <div class="text-base font-thin text-gray-400 mt-2">
+              Please first below to continue
             </div>
           </div>
-          <div
-            class="text-center font-semibold text-xl pt-4 text-primary tracking-wider uppercase"
-          >
-            Blogging
-          </div>
-          <div class="text-gray-400 mt-10 mb-3 text-xs">
+
+          <div class="text-gray-400 mt-4 mb-3 text-xs">
             Username<br />
             <input
               required
               type="text"
               name="username"
+              autocomplete="username"
               v-model="formPost.username"
               class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
             />
           </div>
-          <div class="text-gray-400 text-xs my-3 relative" v-if="!isShow">
-            Password<br />
+          <div class="text-gray-400 text-xs my-3 relative">
+            Password <br />
             <input
-              :type="!isShow == 'password'"
+              :type="!isShow ? 'password' : ''"
               required
               name="password"
+              autocomplete="current-password"
               v-model="formPost.password"
               class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
             />
@@ -109,8 +112,8 @@ async function login() {
           <div class="text-gray-600 mt-10">
             <input
               type="submit"
-              class="bg-primary rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
-              value="Login"
+              class="bg-primary uppercase rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
+              value="Sign in"
             />
           </div>
         </form>
@@ -120,6 +123,11 @@ async function login() {
                         >Privacy Policy</span
                     >
                 </div> -->
+      </div>
+
+      <div class="text-center">
+        Don't have account ?
+        <RouterLink to="/register">Register</RouterLink>
       </div>
     </div>
   </div>

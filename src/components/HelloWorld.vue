@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { useFetch } from "@/helper/fetch.js";
+// import { useFetch } from "@/helper/fetch.js";
 import { useOption } from "@/stores/option";
 
 const data = ref();
