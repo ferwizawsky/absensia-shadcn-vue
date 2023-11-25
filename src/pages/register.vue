@@ -11,8 +11,10 @@ const auth = useAuth();
 const router = useRouter();
 const notif = useNotif();
 const formPost = ref({
-  username: "udeen_winter",
-  password: "udeenwinter_48",
+  name: "",
+  email: "",
+  username: "",
+  password: "",
 });
 onMounted(() => {
   if (auth.token) {
@@ -25,7 +27,7 @@ async function login() {
   try {
     const { data } = await useMyFetch(
       "POST",
-      "/auth/login",
+      "/auth/register",
       jsonFormData(formPost.value)
     );
 
@@ -61,7 +63,7 @@ async function login() {
       >
         <form @submit.prevent="login()">
           <div class="text-3xl text-gray-600 font-bold text-left">
-            <div class="mt-4">LOGIN</div>
+            <div class="mt-4">REGISTER</div>
             <div class="text-base font-thin text-gray-400 mt-2">
               Please first below to continue
             </div>
@@ -134,7 +136,7 @@ async function login() {
             <input
               type="submit"
               class="bg-primary uppercase rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
-              value="Sign in"
+              value="Sign Up"
             />
           </div>
         </form>
@@ -147,8 +149,8 @@ async function login() {
       </div>
 
       <div class="text-center">
-        Don't have account ?
-        <RouterLink to="/register">Register</RouterLink>
+        Already have account ?
+        <RouterLink to="/login">Login</RouterLink>
       </div>
     </div>
   </div>
