@@ -27,6 +27,14 @@ const routes = [
       public: true,
     },
   },
+  {
+    path: "/post/:id",
+    name: "Post Detail",
+    component: () => import("./pages/post/id.vue"),
+    meta: {
+      public: true,
+    },
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
