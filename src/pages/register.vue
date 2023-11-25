@@ -2,6 +2,7 @@
 import { RouterLink, useRouter } from "vue-router";
 import { useAuth } from "@/stores/auth.js";
 import { useNotif } from "@/stores/notif.js";
+import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
 import { onMounted, ref } from "vue";
 
 const isShow = ref(false);
@@ -10,31 +11,33 @@ const auth = useAuth();
 const router = useRouter();
 const notif = useNotif();
 const formPost = ref({
-  username: "",
-  password: "",
+  username: "udeen_winter",
+  password: "udeenwinter_48",
 });
 onMounted(() => {
-  // if (auth.token) {
-  //   router.push("/admin/product");
-  // }
+  if (auth.token) {
+    router.push("/");
+  }
 });
 async function login() {
   if (notif.loading) return;
   notif.loading = true;
   try {
-    const data = await useMyFetch("POST", "/auth/login", {
-      body: formPost.value,
-    });
-    // console.log(data);
-    auth.token = "Bearer " + data.token.access_token;
-    auth.refresh_token = data.token.refresh_token;
+    const { data } = await useMyFetch(
+      "POST",
+      "/auth/login",
+      jsonFormData(formPost.value)
+    );
 
-    // console.log(auth.token);
-    router.push("/admin/product");
+    localStorage.setItem("token", data.token);
+    auth.token = data.token;
+    router.push("/");
     // location.reload();
   } catch (error) {
+    console.log(error);
     notif.make("Failed to Login Check your Username or Password", {
       type: "danger",
+      delay: 4000,
     });
   } finally {
     notif.loading = false;
@@ -63,23 +66,46 @@ async function login() {
               Please first below to continue
             </div>
           </div>
-
+          <div class="text-gray-400 mt-4 mb-3 text-xs">
+            Name<br />
+            <input
+              required
+              type="text"
+              name="name"
+              autocomplete="name"
+              v-model="formPost.name"
+              class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
+            />
+          </div>
+          <div class="text-gray-400 mt-4 mb-3 text-xs">
+            Email<br />
+            <input
+              required
+              type="text"
+              name="email"
+              autocomplete="email"
+              v-model="formPost.email"
+              class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
+            />
+          </div>
           <div class="text-gray-400 mt-4 mb-3 text-xs">
             Username<br />
             <input
               required
               type="text"
               name="username"
+              autocomplete="username"
               v-model="formPost.username"
               class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
             />
           </div>
           <div class="text-gray-400 text-xs my-3 relative">
-            Password<br />
+            Password <br />
             <input
-              :type="!isShow == 'password'"
+              :type="!isShow ? 'password' : ''"
               required
               name="password"
+              autocomplete="current-password"
               v-model="formPost.password"
               class="bg-gray-100 text-gray-600 py-2 w-full px-6 rounded-lg border-transparent focus:outline-none focus:ring-0 focus:ring-red-600 focus:border-transparent"
             />
@@ -107,8 +133,8 @@ async function login() {
           <div class="text-gray-600 mt-10">
             <input
               type="submit"
-              class="bg-primary rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
-              value="Sign Up"
+              class="bg-primary uppercase rounded-lg m-auto drop-shadow-lg py-2 text-white px-16 flex items-center justify-center cursor-pointer transform hover:scale-110 ease-in-out duration-300"
+              value="Sign in"
             />
           </div>
         </form>

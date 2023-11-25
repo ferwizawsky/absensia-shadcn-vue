@@ -15,9 +15,9 @@ const formPost = ref({
   password: "udeenwinter_48",
 });
 onMounted(() => {
-  // if (auth.token) {
-  //   router.push("/admin/product");
-  // }
+  if (auth.token) {
+    router.push("/");
+  }
 });
 async function login() {
   if (notif.loading) return;
@@ -29,9 +29,9 @@ async function login() {
       jsonFormData(formPost.value)
     );
 
-    console.log(data);
     localStorage.setItem("token", data.token);
     auth.token = data.token;
+    router.push("/");
     // location.reload();
   } catch (error) {
     console.log(error);
