@@ -94,7 +94,7 @@ onMounted(() => {
         </div>
 
         <div class="font-semibold mt-6 text-lg">{{ item.title }}</div>
-        <div class="text-sm text-gray-400 font-thin">
+        <div class="text-sm text-gray-500 font-thin">
           {{ limitting(item.content) }}
         </div>
         <div class="flex justify-between text-xs items-center mt-5">
