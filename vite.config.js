@@ -4,23 +4,27 @@ import obfuscatorPlugin from "vite-plugin-javascript-obfuscator";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), obfuscatorPlugin(obfuscateOpt())],
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [vue(), obfuscatorPlugin(obfuscateOpt())],
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
     },
-  },
+  };
 });
 
-function obfuscateOpt() {
+function obfuscateOpt(mode) {
+  const env = loadEnv(mode, process.cwd());
+  const isProd = env?.VITE_MODE == "local" ? false : true;
   return {
     // include: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
     options: {
       // your javascript-obfuscator options
 
-      debugProtection: false,
-      disableConsoleOutput: false,
+      debugProtection: isProd,
+      disableConsoleOutput: isProd,
       deadCodeInjection: false,
 
       compact: true,
@@ -36,7 +40,7 @@ function obfuscateOpt() {
       identifiersPrefix: "",
       ignoreImports: true,
       inputFileName: "",
-      log: true,
+      log: !isProd,
       numbersToExpressions: false,
       optionsPreset: "default",
       renamePropertiesMode: "safe",

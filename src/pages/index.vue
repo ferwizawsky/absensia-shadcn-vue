@@ -144,7 +144,12 @@ onMounted(() => {
         </div>
       </div>
 
-      <Paginate @move="setPage($event)" :page="page" :list="meta?.links" />
+      <Paginate
+        @move="setPage($event)"
+        :page="page"
+        :list="meta?.links"
+        :meta="meta"
+      />
     </div>
     <Navbar />
   </div>

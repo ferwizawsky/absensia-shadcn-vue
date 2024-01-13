@@ -11,7 +11,6 @@ export const useMyFetch = (method = "GET", request = "/", opts) => {
     Accept: "application/json",
   };
   let url = option.url;
-  console.log(option.url);
   if (auth.isAuthenticated) {
     header_option = {
       // Authorization: auth?.token,
@@ -24,7 +23,30 @@ export const useMyFetch = (method = "GET", request = "/", opts) => {
     url: `${url}${request}`,
     data: opts,
     headers: header_option,
-  });
+  })
+    .then((response) => {
+      // Handle successful response
+      console.log(response.data);
+      return response; // or whatever you need to do with the response
+    })
+    .catch((error) => {
+      // Handle error
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Response error:", error.response.data);
+        console.error("Status code:", error.response.status);
+        console.error("Headers:", error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Request setup error:", error.message);
+      }
+
+      throw error; // rethrow the error to propagate it further if needed
+    });
 };
 
 export const jsonFormData = (json, exceptional = []) => {
