@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath, URL } from "url";
 import obfuscatorPlugin from "vite-plugin-javascript-obfuscator";
 import vue from "@vitejs/plugin-vue";
@@ -6,7 +6,10 @@ import vue from "@vitejs/plugin-vue";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    plugins: [vue(), obfuscatorPlugin(obfuscateOpt())],
+    optimizeDeps: {
+      include: ["@fawmi/vue-google-maps", "fast-deep-equal"],
+    },
+    plugins: [vue(), obfuscatorPlugin(obfuscateOpt(mode))],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -25,7 +28,7 @@ function obfuscateOpt(mode) {
 
       debugProtection: isProd,
       disableConsoleOutput: isProd,
-      deadCodeInjection: false,
+      deadCodeInjection: isProd,
 
       compact: true,
       controlFlowFlattening: false,
