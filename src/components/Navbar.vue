@@ -33,14 +33,28 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="w-full bg-white/20 backdrop-blur-sm fixed top-0 left-0 min-h-[65px] flex items-center justify-center"
+    class="bg-primary fixed top-0 left-0 w-full text-white h-[60px] shadow-lg flex justify-between items-center px-4"
   >
-    <div></div>
+    <div class="font-medium tracking-widest flex items-center text-lg">
+      <svg
+        class="w-7 mr-2"
+        viewBox="0 0 46 57"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M32.0547 0L0 32.0547H32.0547V0Z" fill="currentColor" />
+        <path
+          d="M45.5 34.246H0.167773L22.8339 56.9121L45.5 34.246Z"
+          fill="currentColor"
+        />
+      </svg>
+      <span>FIOEP</span>
+    </div>
 
-    <Menu as="div" class="relative inline-block text-left">
+    <Menu as="div" class="relative inline-block text-left text-primary">
       <div>
         <MenuButton
-          class="w-8 h-8 cursor-pointer bg-amber-400 flex items-center justify-center rounded-full text-white"
+          class="w-8 h-8 cursor-pointer bg-white flex items-center justify-center rounded-full"
         >
           {{ item?.name?.substring(0, 1) }}
         </MenuButton>

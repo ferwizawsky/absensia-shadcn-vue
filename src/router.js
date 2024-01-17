@@ -47,9 +47,8 @@ router.beforeEach((to, from, next) => {
 
   if (!to.meta?.public && !token) {
     next("/login");
-  }
-  console.log(token);
-  next();
+  } else next();
+  // console.log(token);
 });
 
 export default router;
