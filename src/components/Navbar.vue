@@ -33,9 +33,11 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="bg-primary fixed top-0 left-0 w-full text-white h-[60px] shadow-lg flex justify-between items-center px-4"
+    class="fixed top-0 left-0 w-full h-[60px] flex justify-between items-center px-4"
   >
-    <div class="font-medium tracking-widest flex items-center text-lg">
+    <div
+      class="font-medium tracking-widest flex items-center text-lg text-primary"
+    >
       <svg
         class="w-7 mr-2"
         viewBox="0 0 46 57"
@@ -48,13 +50,13 @@ onMounted(() => {
           fill="currentColor"
         />
       </svg>
-      <span>FIOEP</span>
+      <!-- <span>FIOEP</span> -->
     </div>
 
-    <Menu as="div" class="relative inline-block text-left text-primary">
+    <Menu as="div" class="relative inline-block text-left">
       <div>
         <MenuButton
-          class="w-8 h-8 cursor-pointer bg-white flex items-center justify-center rounded-full"
+          class="w-8 h-8 cursor-pointer text-white bg-amber-300 flex items-center justify-center rounded-full"
         >
           {{ item?.name?.substring(0, 1) }}
         </MenuButton>

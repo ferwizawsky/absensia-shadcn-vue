@@ -7,7 +7,7 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig(({ mode }) => {
   return {
     optimizeDeps: {
-      include: ["@fawmi/vue-google-maps", "fast-deep-equal"],
+      include: ["fast-deep-equal"],
     },
     plugins: [vue(), obfuscatorPlugin(obfuscateOpt(mode))],
     resolve: {

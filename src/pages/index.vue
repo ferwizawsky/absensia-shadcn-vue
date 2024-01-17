@@ -32,6 +32,24 @@ async function getPost() {
   }
 }
 
+async function getJadwal() {
+  wait.value = false;
+  notif.loading = true;
+  list.value = [];
+  try {
+    const { data } = await useMyFetch(
+      "GET",
+      `/student/jadwal?page=${page.value}&search=${search.value}&limit=8`
+    );
+    console.log(data);
+    // list.value = [...data.absensi];
+    // meta.value = data.meta;
+  } catch (error) {
+  } finally {
+    notif.loading = false;
+  }
+}
+
 watch(
   () => search.value,
   (e) => {
@@ -68,22 +86,20 @@ function limitting(e) {
 }
 onMounted(() => {
   getPost();
+  getJadwal();
 });
 </script>
 <template>
   <div
-    class="max-w-lg mx-auto pt-20 relative text-gray-600 min-h-screen bg-gray-100 pb-20 text-xs"
+    class="max-w-lg mx-auto pt-20 relative text-gray-600 min-h-screen pb-20 text-xs"
   >
     <Navbar />
 
     <div class="px-4">
-      <div class="pt-6 flex items-center justify-between">
-        <div class="text-xl">
-          Hai, <br />
-          <span class="font-semibold">Ferry</span>
-        </div>
+      <div class="pt-2 flex items-center justify-between">
+        <div class="text-xl">Hey there !</div>
         <div>
-          <div
+          <!-- <div
             class="tracking-[7px] mb-2 font-semibold text-primary text-center"
           >
             POIN
@@ -92,30 +108,62 @@ onMounted(() => {
             class="w-[75px] h-[75px] flex items-center justify-center text-3xl font-semibold text-white rounded-full bg-primary"
           >
             50
-          </div>
+          </div> -->
         </div>
       </div>
 
-      <div class="pt-10">
+      <div class="pt-6">
         <div
           v-for="index in list"
-          class="bg-white mb-4 p-2 rounded-full flex items-center justify-between"
+          class="bg-white mb-4 p-4 rounded-xl border border-gray-200 flex items-center justify-between relative"
         >
-          <div class="pl-4">
-            <div class="font-semibold">
-              Pelatihan Nasional Pembuatan Desain...
+          <div class="pl-2">
+            <div class="font-semibold text-sm">
+              {{ index.kelas?.title }}
             </div>
-            <div>
-              <span class="text-primary">Raden Mas Ferry</span>
-              <span> - </span>
-              <span class="text-gray-400">17 Agustus 2024</span>
+            <div class="text-xs">
+              <span class="text-gray-400 font-semibold">
+                {{ index.kelas?.author?.name }}</span
+              >
             </div>
+            <div class="pt-2 text-xs">
+              <span class="text-gray-400"> pada {{ index.kelas?.day }}</span>
+            </div>
+          </div>
+          <div
+            :class="
+              index.status == 'Belum Cukup'
+                ? 'bg-rose-400/20 text-rose-400'
+                : 'bg-primary/20 text-primary'
+            "
+            class="absolute top-2 right-2 py-1 text-xs px-3 flex items-center justify-center font-medium rounded-lg"
+          >
+            {{ index.status }}
           </div>
 
           <div
-            class="w-[55px] text-lg h-[55px] bg-primary flex items-center justify-center text-white font-semibold rounded-full"
+            :class="
+              index.status == 'Belum Cukup'
+                ? ' text-gray-300'
+                : ' text-gray-700'
+            "
+            class="absolute bottom-2 right-2 py-1 text-xs px-3 flex items-center justify-center font-medium rounded-lg"
           >
-            +25
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4 mr-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <div>{{ index.total }} / {{ index.min }}</div>
           </div>
         </div>
       </div>
