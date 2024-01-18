@@ -14,6 +14,7 @@ const formPost = ref({
   username: "udeen_winter",
   password: "udeenwinter_48",
 });
+const test = [];
 onMounted(() => {
   if (auth.token) {
     router.push("/");
