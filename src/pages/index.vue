@@ -5,7 +5,9 @@ import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
 import Topbar from "@/components/Topbar.vue";
 import Paginate from "@/components/UI/Paginate.vue";
 import { dateFormatter } from "@/composables/timeFormatter.js";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const search = ref("");
 const page = ref(1);
 
@@ -62,7 +64,7 @@ async function getJadwal() {
       "GET",
       `/student/jadwal?page=${page.value}&search=${search.value}&limit=80`
     );
-    listJadwal.value = [...data.absensi];
+    listJadwal.value = [...data.data];
     // meta.value = data.meta;
   } catch (error) {}
 }
@@ -105,6 +107,7 @@ onMounted(() => {
   getKelas();
   getPost();
   getJadwal();
+  if (localStorage.getItem("role_id") == "1") router.push("/dosen");
 });
 </script>
 <template>
@@ -112,19 +115,13 @@ onMounted(() => {
     <Topbar />
 
     <div class="px-4">
-      <!-- <div class="">
-        <div class="grid grid-cols-3 gap-4 text-center text-white h-[90px]">
-          <div class="bg-rose-400 rounded-3xl p-3">
-            <div class="text-[10px]">Belum Cukup</div>
-          </div>
-          <div class="bg-lime-600/60 rounded-3xl"></div>
-          <div class="bg-amber-400 rounded-3xl"></div>
-        </div>
-      </div> -->
-
       <div>
-        <div>
+        <div class="text-center">
+          <div class="text-lg font-semibold">Jadwal</div>
+        </div>
+        <div class="pt-3">
           <div
+            v-for="index in listJadwal"
             class="bg-white mb-4 drop-shadow-md p-1.5 rounded-full flex items-center justify-start flex-wrap relative"
           >
             <div class="p-4 bg-primary rounded-full text-white">
@@ -144,14 +141,19 @@ onMounted(() => {
               </svg>
             </div>
             <div class="pl-3">
-              <div class="text-gray-400">UTS 4TI E Pemrograman Object</div>
-              <div class="text-lg font-semibold">16 Februari 2024</div>
+              <div class="text-gray-400">
+                {{ index.title }} ({{ index?.author?.name }})
+              </div>
+              <div>
+                {{ index?.kelas?.title }}
+              </div>
+              <div class="text-xs font-semibold">16 Februari 2024</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="pt-7 flex items-center justify-between">
+      <div class="pt-8 text-center">
         <div class="text-lg font-semibold">Absensi</div>
       </div>
 

@@ -8,7 +8,7 @@ const routes = [
     name: "Home",
     component: () => import("./pages/index.vue"),
     meta: {
-      public: true,
+      public: false,
     },
   },
   {
@@ -34,6 +34,24 @@ const routes = [
     meta: {
       public: true,
     },
+  },
+  {
+    path: "/dosen",
+    name: "Dosen",
+    component: () => import("./pages/dosen/layout.vue"),
+    redirect: "/dosen/dash",
+    children: [
+      {
+        path: "dash",
+        name: "Dosen Dashboard",
+        component: () => import("./pages/dosen/index.vue"),
+      },
+      {
+        path: "kelas/:id",
+        name: "Kelas Detail",
+        component: () => import("./pages/dosen/kelasDetail.vue"),
+      },
+    ],
   },
 ];
 const router = createRouter({

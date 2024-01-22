@@ -16,8 +16,10 @@ const formPost = ref({
 });
 const test = [];
 onMounted(() => {
-  if (auth.token) {
-    router.push("/");
+  if (localStorage.getItem("role_id")) {
+    let role_id = Number(localStorage.getItem("role_id"));
+    if (role_id == 0) router.push("/");
+    if (role_id == 1) router.push("/dosen");
   }
 });
 async function login() {
@@ -32,7 +34,12 @@ async function login() {
 
     localStorage.setItem("token", data.token);
     auth.token = data.token;
-    router.push("/");
+    // console.log(data);
+    if (data?.user?.role_id == 0) router.push("/");
+    if (data?.user?.role_id == 1) router.push("/dosen");
+
+    // router.push("/");
+    // router.push("/dosen");
     // location.reload();
   } catch (error) {
     console.log(error);

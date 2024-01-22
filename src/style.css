@@ -17,9 +17,19 @@
     @apply text-primary   hover:text-amber-500;
   }
 
+  .cardia {
+    @apply bg-white mb-4 drop-shadow-md p-4 rounded-2xl;
+  }
+
+  .item-input {
+    @apply mb-4;
+  }
+  .item-input span {
+    @apply font-semibold;
+  }
   
   .inputan {
-    @apply bg-transparent border border-gray-300 py-2 w-full px-6 rounded-md focus:outline-none ;
+    @apply bg-transparent border border-gray-300 py-2 w-full px-3 rounded-md focus:outline-none ;
   }
   .btn-square-out {
     @apply px-2 border border-primary hover:bg-primary hover:text-current py-2 rounded-lg text-primary bg-transparent ease-in-out duration-300;
