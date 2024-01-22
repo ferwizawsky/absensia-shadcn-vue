@@ -1,17 +1,48 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useNotif } from "@/stores/notif.js";
 import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
-import { CalendarIcon, ClockIcon, UserIcon } from "@heroicons/vue/24/outline";
+import {
+  CalendarIcon,
+  ClockIcon,
+  UserIcon,
+  ArrowUpOnSquareIcon,
+} from "@heroicons/vue/24/outline";
 import OptionStudent from "../../components/option/OptionStudent.vue";
 
+const router = useRouter();
 const notif = useNotif();
 const route = useRoute();
 const kelas = ref({});
 const absensi = ref([]);
 
-const selectedStudent = ref();
+async function store() {
+  if (notif.loading) return;
+  notif.loading = true;
+  let url = "/kelas";
+  if (route.params.id) {
+    url = `/kelas/${route.params.id}/update`;
+  }
+  // console.log(jsonFormData(item.value));
+  let item = { ...kelas.value };
+  if (kelas.value.students.length != 0) {
+    item.students = [];
+    for (let x in kelas.value.students) {
+      item.students.push(kelas.value.students[x].id);
+    }
+  }
+  try {
+    const { data } = await useMyFetch("POST", url, jsonFormData(item));
+    if (!route.params.id) notif.make("Succed Create Data!");
+    else notif.make("Succed Update Data!");
+    router.go(-1);
+  } catch (error) {
+  } finally {
+    // console.log(notif.loading);
+    notif.loading = false;
+  }
+}
 
 async function getPost() {
   if (notif.loading) return;
@@ -44,19 +75,34 @@ onMounted(() => {
       </div>
     </div>
     <div class="cardia pt-8 relative z-10">
-      <form @submit.prevent="">
+      <form @submit.prevent="store()">
         <div class="item-input">
           <span>Nama Kelas</span>
-          <input v-model="kelas.title" type="text" class="inputan" disabled />
+          <input
+            v-model="kelas.title"
+            type="text"
+            class="inputan"
+            :disabled="!$route.query.type ? true : false"
+          />
         </div>
         <div class="item-input">
           <span>Min. Kehadiran</span>
-          <input v-model="kelas.min" type="text" class="inputan" disabled />
+          <input
+            v-model="kelas.min"
+            type="text"
+            class="inputan"
+            :disabled="!$route.query.type ? true : false"
+          />
         </div>
 
         <div class="item-input">
           <span>Hari Matkul</span>
-          <input v-model="kelas.day" type="text" class="inputan" disabled />
+          <input
+            v-model="kelas.day"
+            type="text"
+            class="inputan"
+            :disabled="!$route.query.type ? true : false"
+          />
         </div>
 
         <!-- <div class="item-input">
@@ -66,21 +112,29 @@ onMounted(() => {
 
         <div class="item-input">
           <span>Matkul Aktif</span>
-          <select v-model="kelas.isUnactive" class="inputan" disabled>
+          <select
+            v-model="kelas.isUnactive"
+            class="inputan"
+            :disabled="!$route.query.type ? true : false"
+          >
             <option :value="0">Aktif</option>
             <option :value="1">Libur</option>
           </select>
         </div>
 
-        <div class="item-input" v-if="kelas.students">
+        <div class="item-input" v-if="kelas.students && $route.query.type">
           <span>Mahasiswa</span>
           <OptionStudent
             @add="kelas.students.unshift($event)"
             :list="kelas.students"
           />
         </div>
+        <div class="text-center" v-if="$route.query.type">
+          <button class="btn-lg">Simpan</button>
+        </div>
       </form>
     </div>
+
     <div v-for="item in kelas?.students" class="cardia">
       <!-- {{ item.id }} -->
       <div class="font-medium text-base">{{ item.name }}</div>

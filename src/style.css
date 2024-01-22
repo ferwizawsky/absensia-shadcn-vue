@@ -37,15 +37,15 @@
   
 
   .btn-square {
-    @apply px-2 border border-primary bg-primary text-current py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+    @apply px-2 border border-primary bg-primary text-white py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
   }
   
   .btn {
-      @apply px-6 border border-primary bg-primary text-current py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+      @apply px-6 border border-primary bg-primary text-white py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
   }
 
   .btn-lg {
-      @apply px-10 border border-primary bg-primary text-current py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+      @apply px-10 border border-primary bg-primary text-white py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
   }
 
 }

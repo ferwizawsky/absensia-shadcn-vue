@@ -17,16 +17,22 @@ const props = defineProps(["disabled", "list"]);
 let selected = ref();
 let query = ref("");
 
-let filteredData = computed(() =>
-  query.value === ""
-    ? option.listUser
-    : option.listUser.filter((person) =>
-        person.name
-          .toLowerCase()
-          .replace(/\s+/g, "")
-          .includes(query.value.toLowerCase().replace(/\s+/g, ""))
-      )
-);
+let filteredData = computed(() => {
+  let filteredResults =
+    query.value === ""
+      ? option.listUser
+      : option.listUser.filter((person) =>
+          person.name
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(query.value.toLowerCase().replace(/\s+/g, ""))
+        );
+  // Limit the results to 15 objects
+  return filteredResults
+    .filter((person) => props.list.indexOf(person) === -1)
+    .slice(0, 15);
+});
+
 watch(
   () => selected.value,
   (e) => {
