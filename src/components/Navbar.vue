@@ -10,7 +10,7 @@ import {
     class="fixed bottom-0 z-20 bg-gray-100/10 backdrop-blur-sm left-0 w-full h-[60px] px-4"
   >
     <div
-      class="mx-auto max-w-lg grid-cols-3 grid gap-4 justify-center items-center bot-nav"
+      class="mx-auto max-w-lg grid-cols-2 grid gap-4 justify-center items-center bot-nav"
     >
       <button
         @click="$router.push('/dosen/dash')"
@@ -24,12 +24,12 @@ import {
       >
         <CalendarDaysIcon class="icona" />
       </button>
-      <button
+      <!-- <button
         @click="$router.push('/dosen/mahasiswa')"
         :class="$route.path == '/dosen/mahasiswa' ? 'text-primary' : ''"
       >
         <UserGroupIcon class="icona" />
-      </button>
+      </button> -->
     </div>
   </div>
 </template>

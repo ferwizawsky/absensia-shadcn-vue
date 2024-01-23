@@ -53,6 +53,11 @@ const routes = [
         name: "Jadwal Detail",
         component: () => import("./pages/dosen/jadwal/id.vue"),
       },
+      {
+        path: "jadwal-make",
+        name: "Buat Jadwal",
+        component: () => import("./pages/dosen/jadwal/id.vue"),
+      },
     ],
   },
 ];

@@ -6,6 +6,7 @@ export const useOption = defineStore("option", () => {
   const url = ref("");
   const name = ref("");
   const listUser = ref([]);
+  const listKelas = ref([]);
 
   async function getStudent() {
     listUser.value = [];
@@ -16,6 +17,15 @@ export const useOption = defineStore("option", () => {
     } finally {
     }
   }
+  async function getKelas() {
+    listKelas.value = [];
+    try {
+      const tmp = await useMyFetch("GET", `/kelas/option?limit=10000`);
+      listKelas.value = [...tmp.data.data.data];
+    } catch (error) {
+    } finally {
+    }
+  }
 
-  return { url, name, getStudent, listUser };
+  return { url, name, getStudent, listUser, listKelas, getKelas };
 });

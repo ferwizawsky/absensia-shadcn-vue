@@ -9,8 +9,9 @@ const option = useOption();
 
 onMounted(() => {
   option.getStudent();
-  console.log("test");
-  console.log(option.listUser);
+  option.getKelas();
+  // console.log("test");
+  // console.log(option.listUser);
 });
 </script>
 <template>

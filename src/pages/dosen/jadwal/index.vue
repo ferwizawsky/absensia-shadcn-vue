@@ -28,17 +28,11 @@ const meta = ref({
 });
 const wait = ref(false);
 
-async function deleteData() {
-  let text = `Delete Data Mahasiswa dari List ?`;
+async function deleteData(e) {
+  let text = `Delete Data Jadwal ${e.title} ?`;
   if (confirm(text) == true) {
     try {
-      const { data } = await useMyFetch(
-        "POST",
-        `/kelas/${route.params.id}/remove`,
-        jsonFormData({
-          students: selectedStudents.value,
-        })
-      );
+      const { data } = await useMyFetch("delete", `/jadwal/${e?.id}/delete`);
       getPost();
     } catch (e) {
       // console.log(e);
@@ -112,7 +106,12 @@ onMounted(() => {
     </div>
     <div class="pt-4">
       <div class="mb-2 flex justify-end">
-        <button class="btn" @click="selectAll()">Buat Jadwal</button>
+        <button
+          class="btn"
+          @click="$router.push(`/dosen/jadwal-make?type=add`)"
+        >
+          Buat Jadwal
+        </button>
       </div>
 
       <div
@@ -161,26 +160,12 @@ onMounted(() => {
               leave-to-class="transform scale-95 opacity-0"
             >
               <MenuItems
-                class="absolute border -top-1 border-gray-200 right-0 mt-0 w-40 origin-top-right rounded-md bg-white shadow-lg focus:outline-none"
+                class="absolute border top-1 border-gray-200 right-0 mt-0 w-40 origin-top-right rounded-md bg-white shadow-lg focus:outline-none"
               >
                 <div class="px-1 py-1">
                   <MenuItem v-slot="{ active }">
                     <button
-                      @click="$router.push(`/dosen/kelas/${index.id}`)"
-                      :class="[
-                        active ? 'bg-primary text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      Edit
-                    </button>
-                  </MenuItem>
-
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      @click="
-                        $router.push(`/dosen/kelas/${index.id}?type=edit`)
-                      "
+                      @click="deleteData(index)"
                       :class="[
                         active ? 'bg-rose-600 text-white' : 'text-rose-700',
                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',

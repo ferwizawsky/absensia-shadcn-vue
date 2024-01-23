@@ -133,10 +133,10 @@ async function login() {
                 </div> -->
       </div>
 
-      <div class="text-center">
+      <!-- <div class="text-center">
         Don't have account ?
         <RouterLink to="/register">Register</RouterLink>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

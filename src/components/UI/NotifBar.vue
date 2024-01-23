@@ -26,7 +26,7 @@ function getClass(params) {
 </script>
 <template>
   <!-- This is an example component -->
-  <div class="max-w-lg mx-auto fixed top-3 right-3 z-10">
+  <div class="max-w-lg mx-auto fixed top-3 right-3 z-50">
     <TransitionGroup name="list" tag="ul">
       <li
         v-for="item in notif.listNotif"
