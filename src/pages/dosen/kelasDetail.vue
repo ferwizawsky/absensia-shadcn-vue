@@ -3,19 +3,18 @@ import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useNotif } from "@/stores/notif.js";
 import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
-import {
-  CalendarIcon,
-  ClockIcon,
-  UserIcon,
-  ArrowUpOnSquareIcon,
-} from "@heroicons/vue/24/outline";
+
 import OptionStudent from "../../components/option/OptionStudent.vue";
+import StudentList from "@/components/option/StudentList.vue";
 
 const router = useRouter();
 const notif = useNotif();
 const route = useRoute();
 const kelas = ref({});
+
+const selectedStudents = ref([]);
 const absensi = ref([]);
+const backStudent = ref([]);
 
 async function store() {
   if (notif.loading) return;
@@ -24,7 +23,6 @@ async function store() {
   if (route.params.id) {
     url = `/kelas/${route.params.id}/update`;
   }
-  // console.log(jsonFormData(item.value));
   let item = { ...kelas.value };
   if (kelas.value.students.length != 0) {
     item.students = [];
@@ -44,6 +42,54 @@ async function store() {
   }
 }
 
+async function absen() {
+  let text = `Absen Mahasiswa dari List ?`;
+  let tmp1 = [];
+  for (let x in selectedStudents.value) {
+    tmp1.push({
+      id: selectedStudents.value[x],
+      status: "",
+    });
+  }
+
+  if (confirm(text) == true) {
+    try {
+      const { data } = await useMyFetch(
+        "POST",
+        `/absen`,
+        jsonFormData({
+          user: tmp1,
+          kelas_id: route.params.id,
+        })
+      );
+      selectedStudents.value = [];
+      getPost();
+    } catch (e) {
+      // console.log(e);
+      // notif.make("Failed Delete Data", { type: "danger" });
+    }
+  }
+}
+
+async function deleteData() {
+  let text = `Delete Data Mahasiswa dari List ?`;
+  if (confirm(text) == true) {
+    try {
+      const { data } = await useMyFetch(
+        "POST",
+        `/kelas/${route.params.id}/remove`,
+        jsonFormData({
+          students: selectedStudents.value,
+        })
+      );
+      getPost();
+    } catch (e) {
+      // console.log(e);
+      // notif.make("Failed Delete Data", { type: "danger" });
+    }
+  }
+}
+
 async function getPost() {
   if (notif.loading) return;
   notif.loading = true;
@@ -56,6 +102,7 @@ async function getPost() {
     );
     kelas.value = { ...data.kelas };
     absensi.value = [...data.absensi];
+    backStudent.value = [...data.kelas.students];
   } catch (error) {
   } finally {
     notif.loading = false;
@@ -135,44 +182,24 @@ onMounted(() => {
       </form>
     </div>
 
-    <div v-for="item in kelas?.students" class="cardia">
-      <!-- {{ item.id }} -->
-      <div class="font-medium text-base">{{ item.name }}</div>
-      <div class="text-xs flex items-center text-gray-400 pt-1">
-        <ClockIcon class="w-4 h-4 mr-1" />
-        <div class="">
-          {{
-            absensi.find((x) => x.user?.username == item.username)?.total ?? 0
-          }}
-          / {{ kelas?.min }} Kehadiran
-          <span
-            :class="
-              absensi.find((x) => x.user?.username == item.username)?.status ==
-              'Cukup'
-                ? 'text-primary'
-                : 'text-rose-600'
-            "
-          >
-            {{
-              absensi.find((x) => x.user?.username == item.username)?.status ??
-              "Belum Cukup"
-            }}
-          </span>
-        </div>
-      </div>
-      <div></div>
-      <!-- <div
-        :class="
-          list.find((x) => x.kelas?.id == index.id)?.status == 'Cukup'
-            ? 'bg-primary/20 text-primary'
-            : 'bg-rose-400/20 text-rose-400'
-        "
-        class="absolute bottom-2 right-2 py-1 text-xs px-3 flex items-center justify-center font-medium rounded-2xl"
+    <div class="pt-4">
+      <StudentList
+        v-model="selectedStudents"
+        :absensi="absensi"
+        :kelas="kelas"
+        :students="kelas?.students"
       >
-        {{
-          kelas.find((x) => x.kelas?.id == index.id)?.status ?? "Belum Cukup"
-        }}
-      </div> -->
+        <button class="btn" @click="absen()" v-if="!route.query.type">
+          Absen
+        </button>
+        <button
+          class="btn-danger"
+          @click="deleteData()"
+          v-if="route.query.type"
+        >
+          Delete
+        </button>
+      </StudentList>
     </div>
   </div>
 </template>

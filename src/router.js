@@ -28,14 +28,6 @@ const routes = [
     },
   },
   {
-    path: "/post/:id",
-    name: "Post Detail",
-    component: () => import("./pages/post/id.vue"),
-    meta: {
-      public: true,
-    },
-  },
-  {
     path: "/dosen",
     name: "Dosen",
     component: () => import("./pages/dosen/layout.vue"),
@@ -50,6 +42,16 @@ const routes = [
         path: "kelas/:id",
         name: "Kelas Detail",
         component: () => import("./pages/dosen/kelasDetail.vue"),
+      },
+      {
+        path: "jadwal",
+        name: "Jadwal",
+        component: () => import("./pages/dosen/jadwal/index.vue"),
+      },
+      {
+        path: "jadwal/:id",
+        name: "Jadwal Detail",
+        component: () => import("./pages/dosen/jadwal/id.vue"),
       },
     ],
   },
