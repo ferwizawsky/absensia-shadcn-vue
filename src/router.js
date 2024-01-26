@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useOption } from "@/stores/option";
 import { useAuth } from "@/stores/auth";
 
+import dosenRoute from "@/routers/dosen";
+import adminRoute from "@/routers/admin";
+
 const routes = [
   {
     path: "/",
@@ -27,39 +30,8 @@ const routes = [
       public: true,
     },
   },
-  {
-    path: "/dosen",
-    name: "Dosen",
-    component: () => import("./pages/dosen/layout.vue"),
-    redirect: "/dosen/dash",
-    children: [
-      {
-        path: "dash",
-        name: "Dosen Dashboard",
-        component: () => import("./pages/dosen/index.vue"),
-      },
-      {
-        path: "kelas/:id",
-        name: "Kelas Detail",
-        component: () => import("./pages/dosen/kelasDetail.vue"),
-      },
-      {
-        path: "jadwal",
-        name: "Jadwal",
-        component: () => import("./pages/dosen/jadwal/index.vue"),
-      },
-      {
-        path: "jadwal/:id",
-        name: "Jadwal Detail",
-        component: () => import("./pages/dosen/jadwal/id.vue"),
-      },
-      {
-        path: "jadwal-make",
-        name: "Buat Jadwal",
-        component: () => import("./pages/dosen/jadwal/id.vue"),
-      },
-    ],
-  },
+  dosenRoute,
+  adminRoute,
 ];
 const router = createRouter({
   history: createWebHistory(),

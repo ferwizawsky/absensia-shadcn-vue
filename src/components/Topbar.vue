@@ -33,7 +33,7 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="fixed top-0 z-20 bg-gray-100/10 backdrop-blur-sm left-0 w-full h-[60px] flex justify-between items-center px-4"
+    class="fixed top-0 z-20 bg-card/10 backdrop-blur-sm left-0 w-full h-[60px] flex justify-between items-center px-4"
   >
     <div
       class="font-medium tracking-widest flex items-center text-lg text-primary"
@@ -56,7 +56,7 @@ onMounted(() => {
     <Menu as="div" class="relative inline-block text-left">
       <div>
         <MenuButton
-          class="w-8 h-8 cursor-pointer text-white bg-amber-300 flex items-center justify-center rounded-full"
+          class="w-8 h-8 cursor-pointer text-white bg-primary flex items-center justify-center rounded-full"
         >
           {{ item?.name?.substring(0, 1) }}
         </MenuButton>

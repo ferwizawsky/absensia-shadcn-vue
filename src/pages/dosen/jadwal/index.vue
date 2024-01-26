@@ -3,7 +3,7 @@ import { ref, onMounted, watch, defineAsyncComponent } from "vue";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useNotif } from "@/stores/notif.js";
 import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
-import Paginate from "@/components/UI/Paginate.vue";
+import Paginate from "@/components/ui/Paginate.vue";
 import { dateFormatter } from "@/composables/timeFormatter.js";
 import {
   CalendarIcon,

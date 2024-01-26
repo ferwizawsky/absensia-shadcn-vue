@@ -3,7 +3,7 @@ import { ref, onMounted, watch } from "vue";
 import { useNotif } from "@/stores/notif.js";
 import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
 import Topbar from "@/components/Topbar.vue";
-import Paginate from "@/components/UI/Paginate.vue";
+import Paginate from "@/components/ui/Paginate.vue";
 import { dateFormatter } from "@/composables/timeFormatter.js";
 import { useRouter } from "vue-router";
 
@@ -122,7 +122,7 @@ onMounted(() => {
         <div class="pt-3">
           <div
             v-for="index in listJadwal"
-            class="bg-white mb-4 drop-shadow-md p-1.5 rounded-full flex items-center justify-start flex-wrap relative"
+            class="bg-card mb-4 drop-shadow-md p-1.5 rounded-full flex items-center justify-start flex-wrap relative"
           >
             <div class="p-4 bg-primary rounded-full text-white">
               <svg
@@ -160,7 +160,7 @@ onMounted(() => {
       <div class="pt-3">
         <div
           v-for="index in listKelas"
-          class="bg-white mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
+          class="bg-card mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
         >
           <div class="pl-2">
             <div class="text-sm">
