@@ -21,7 +21,7 @@ onMounted(() => {
     >
       <div class="">FIOEP</div>
       <ul
-        class="fer-menu bg-base-200 lg:fer-menu-horizontal fer-rounded-box space-x-2"
+        class="fer-menu bg-base-200 fer-menu-horizontal fer-rounded-box space-x-2"
       >
         <li>
           <a>
