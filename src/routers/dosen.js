@@ -1,7 +1,7 @@
 export default {
   path: "/dosen",
   name: "Dosen",
-  component: () => import("@/pages/dosen/layout.vue"),
+  component: () => import("@/layouts/dosen.vue"),
   redirect: "/dosen/dash",
   children: [
     {

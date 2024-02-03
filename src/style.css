@@ -78,4 +78,23 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::-webkit-scrollbar {
+    @apply w-1 h-1 lg:w-2;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-accent/80;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent-foreground/20;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+  
 }
