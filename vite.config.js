@@ -9,7 +9,10 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ["fast-deep-equal"],
     },
-    plugins: [vue(), obfuscatorPlugin(obfuscateOpt(mode))],
+    plugins: [
+      vue(),
+      //  obfuscatorPlugin(obfuscateOpt(mode))
+    ],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
