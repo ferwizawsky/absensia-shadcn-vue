@@ -7,7 +7,7 @@ export default {
     {
       path: "dash",
       name: "Admin Dashboard",
-      component: () => import("@/pages/admin/index.vue"),
+      component: () => import("@/pages/admin/dashboard.vue"),
     },
   ],
 };

@@ -76,7 +76,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-all duration-500;
   }
   ::-webkit-scrollbar {
     @apply w-1 h-1 lg:w-2;
@@ -84,12 +84,12 @@
   
   /* Track */
   ::-webkit-scrollbar-track {
-    @apply bg-accent/80;
+    @apply bg-background/80;
   }
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply bg-accent-foreground/20;
+    @apply bg-foreground/20;
   }
   
   /* Handle on hover */
