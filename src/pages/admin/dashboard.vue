@@ -11,7 +11,7 @@ const AreaChart = defineAsyncComponent(() =>
   import("@/components/dashboard/AreaChart.vue")
 );
 
-const data = ref({
+const dataLine = ref({
   tanggal: "Jan - Des 2024",
   label: [
     "Jan",
@@ -27,14 +27,14 @@ const data = ref({
     "Nov",
     "Des",
   ],
-  value: [21122, 3398, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  jumlah: [21122, 3398, 2140, 2210, 4410, 21420, 0, 1100, 10000, 2300, 1440, 0],
 });
 </script>
 
 <template>
   <div class="grid lg:grid-cols-3 gap-4">
-    <LineChart :label="data.label" :value="data.value" />
-    <AreaChart />
+    <LineChart :data="dataLine" type="tahun" />
+    <AreaChart :data="dataLine" type="tahun" />
     <BarChart />
   </div>
 </template>

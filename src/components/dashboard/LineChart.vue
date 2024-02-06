@@ -1,8 +1,14 @@
 <script setup>
+import { ref, watch } from "vue";
 import apexchart from "vue3-apexcharts";
-const props = defineProps(["label","value"])
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
+const props = defineProps({
+  data: Object,
+  type: String,
+});
 
+const emit = defineEmits(["parse"]);
 const series = ref(getSeries());
 const options = ref(getOption());
 
@@ -18,7 +24,7 @@ function getSeries() {
   return [
     {
       name: "Jumlah",
-      data: props.data?.data : props.data?.jumlah,
+      data: props.type != "tahun" ? props.data?.data : props.data?.jumlah,
       color: "#445fe3",
     },
   ];
@@ -99,7 +105,7 @@ function getOption() {
       },
       fill: {
         colors: "#445fe3",
-        type: "gradient",
+        type: "solid",
         gradient: {
           shadeIntensity: 1,
           opacityFrom: 0.7,
@@ -111,7 +117,7 @@ function getOption() {
         show: true,
         curve: "smooth",
         lineCap: "butt",
-        colors: ["#445fe3"],
+        colors: ["#fff"],
         width: 4,
         dashArray: 0,
       },
@@ -120,7 +126,7 @@ function getOption() {
       },
       xaxis: {
         type: "category",
-        categories: props?.label,
+        categories: props.data?.label,
       },
       yaxis: {
         labels: {
@@ -132,11 +138,11 @@ function getOption() {
     };
 }
 </script>
-
 <template>
-  <div>
+  <div class="w-full h-[400px] pr-3 pl-1 pt-8">
     <apexchart
-      class="w-full"
+      width="100%"
+      height="100%"
       type="line"
       :options="options"
       :series="series"
