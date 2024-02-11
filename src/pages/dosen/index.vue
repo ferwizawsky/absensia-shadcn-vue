@@ -12,6 +12,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 import ViewKelas from "@/components/ViewKelas.vue";
+import { Button } from "@/components/ui/button";
 // const ViewKelas = defineAsyncComponent(() =>
 //   import("@/components/ViewKelas.vue")
 // );
@@ -91,10 +92,15 @@ onMounted(() => {
     <div class="text-center">
       <div class="text-lg font-semibold">Kelas</div>
     </div>
+    <div class="text-right">
+      <RouterLink to="/dosen/kelas-make?type=add"
+        ><Button>Buat Kelas</Button>
+      </RouterLink>
+    </div>
     <div class="pt-3">
       <div
         v-for="index in list"
-        class="bg-white mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
+        class="bg-accent mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
       >
         <div class="pl-2">
           <div class="text-sm">
@@ -116,7 +122,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="absolute bottom-2 right-2 py-1 text-xs px-3 text-right">
-          <div :class="!index.isUnactive ? ' text-gray-700' : ' text-rose-600'">
+          <div :class="!index.isUnactive ? ' text-primary' : ' text-rose-600'">
             {{ !index.isUnactive ? "Aktif" : "Libur" }}
           </div>
           <div class="flex items-center justify-center">

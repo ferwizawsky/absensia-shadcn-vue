@@ -15,6 +15,11 @@ export default {
       component: () => import("@/pages/dosen/kelasDetail.vue"),
     },
     {
+      path: "kelas-make",
+      name: "Kelas Make",
+      component: () => import("@/pages/dosen/kelasDetail.vue"),
+    },
+    {
       path: "jadwal",
       name: "Jadwal",
       component: () => import("@/pages/dosen/jadwal/index.vue"),

@@ -4,7 +4,7 @@ const emit = defineEmits(["move"]);
 
 function getClass(index) {
   let str = "";
-  if (props.page == index.label) str = "bg-primary border-primary";
+  if (props.page == index.label) str = "bg-primary text-white border-primary";
   else str = "border-gray-600 hover:text-primary";
   if (!index.url) str = "hidden";
 

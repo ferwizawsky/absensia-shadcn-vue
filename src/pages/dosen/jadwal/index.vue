@@ -12,6 +12,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 import ViewKelas from "@/components/ViewKelas.vue";
+import { Button } from "@/components/ui/button";
 // const ViewKelas = defineAsyncComponent(() =>
 //   import("@/components/ViewKelas.vue")
 // );
@@ -106,17 +107,17 @@ onMounted(() => {
     </div>
     <div class="pt-4">
       <div class="mb-2 flex justify-end">
-        <button
+        <Button
           class="btn"
           @click="$router.push(`/dosen/jadwal-make?type=add`)"
         >
           Buat Jadwal
-        </button>
+        </Button>
       </div>
 
       <div
         v-for="index in list"
-        class="bg-white mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
+        class="bg-accent mb-4 drop-shadow-md p-4 rounded-2xl flex items-center justify-between flex-wrap relative"
       >
         <div class="pl-2">
           <div class="text-sm pb-3">

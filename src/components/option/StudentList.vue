@@ -113,11 +113,11 @@ watch(
       <div
         class="absolute bottom-2 right-2 py-1 text-xs px-3 flex items-center justify-center font-medium rounded-2xl"
       >
-        <!-- {{ index }}
         <BackspaceIcon
-          @click="kelas?.students?.splice(index, 1)"
+          v-if="$route.params.id"
+          @click="emit('remove', index)"
           class="w-6 h-6 text-rose-600 hover:brightness-50 duration-300 ease-linear cursor-pointer"
-        /> -->
+        />
       </div>
     </div>
   </div>

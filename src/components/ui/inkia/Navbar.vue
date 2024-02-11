@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { useMyFetch, jsonFormData } from "@/composables/fetch.js";
 import logo from "@/components/logo.vue";
 import {
   Cloud,
@@ -33,9 +34,49 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useOption } from "@/stores/option";
+import { useRouter } from "vue-router";
+import { useAuth } from "@/stores/auth";
 
 const option = useOption();
 const notTop = ref(false);
+const list = [
+  // {
+  //   to: "/admin/dash",
+  //   text: "Dashboard",
+  // },
+  {
+    to: "/admin/user",
+    text: "UserManagement",
+  },
+  {
+    to: "/admin/jadwal",
+    text: "JadwalMangement",
+  },
+  {
+    to: "/admin/kelas",
+    text: "KelasManagement",
+  },
+];
+const item = ref();
+const auth = useAuth();
+const router = useRouter();
+async function getUser() {
+  item.value = {};
+  try {
+    const { data } = await useMyFetch("GET", `/auth/profile`);
+    item.value = { ...data.data };
+    // location.reload();
+  } catch (error) {
+    logout();
+  } finally {
+  }
+}
+
+function logout() {
+  auth.token = "";
+  localStorage.removeItem("token");
+  router.push("/login");
+}
 
 const handleScroll = () => {
   const rect = document.getElementById("navbar").getBoundingClientRect();
@@ -49,6 +90,9 @@ function toggleTheme() {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  if (!item.value) {
+    getUser();
+  }
 });
 </script>
 <template>
@@ -59,12 +103,12 @@ onMounted(() => {
       </div>
       <div class="flex space-x-4 items-center">
         <div>
-          <button
+          <!-- <button
             @click="toggleTheme"
             class="text-xs bg-foreground/10 px-3 py-1 rounded-full hover:bg-foreground/20"
           >
             Wanderer Plan
-          </button>
+          </button> -->
         </div>
 
         <DropdownMenu>
@@ -72,11 +116,11 @@ onMounted(() => {
             <button
               class="w-8 h-8 cursor-pointer text-white bg-primary flex items-center justify-center rounded-full"
             >
-              F
+              {{ item?.name?.substring(0, 1) }}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-56 mr-7 mt-2">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <!-- <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
@@ -148,8 +192,8 @@ onMounted(() => {
               <Cloud class="mr-2 h-4 w-4" />
               <span>API</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuSeparator /> -->
+            <DropdownMenuItem @click="logout">
               <LogOut class="mr-2 h-4 w-4" />
               <span>Log out</span>
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
@@ -164,15 +208,18 @@ onMounted(() => {
     id="navbar"
     class="navbar linear duration-100"
   >
-    <span
+    <RouterLink
       class="hover:text-foreground cursor-pointer pb-4"
       :class="
-        index == 1 ? 'text-foreground  border-b-[3px] border-current' : ''
+        $route?.path?.toLowerCase().search(item.to) != -1
+          ? 'text-foreground  border-b-[3px] border-current'
+          : ''
       "
-      v-for="index in 18"
+      v-for="(item, index) in list"
+      :to="item.to"
     >
-      TextMenu
-    </span>
+      {{ item.text }}
+    </RouterLink>
   </div>
   <logo
     :class="notTop ? 'scale-75' : ''"

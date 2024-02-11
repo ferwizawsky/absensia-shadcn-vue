@@ -69,6 +69,34 @@
 
  
 @layer base {
+  
+  .cardia {
+    @apply bg-white mb-4 drop-shadow-md p-4 rounded-2xl;
+  }
+  .item-input{
+     @apply mb-4;
+        }
+        
+  .inputan {
+    @apply bg-transparent border border-gray-300 py-2 w-full px-6 rounded-md focus:outline-none ;
+  }
+  .btn-square-out {
+    @apply px-2 border border-primary hover:bg-primary hover:text-current py-2 rounded-lg text-primary bg-transparent ease-in-out duration-300;
+  }
+  
+
+  .btn-square {
+    @apply px-2 border border-primary bg-primary text-current py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+  }
+  
+  .btn {
+      @apply px-6 border text-white border-primary bg-primary py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+  }
+
+  .btn-lg {
+      @apply px-10 border border-primary bg-primary py-2 rounded-lg hover:text-primary hover:bg-transparent ease-in-out duration-300;
+  }
+
   .fer-menu:hover li a {
     @apply rounded-full;
   }

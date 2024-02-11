@@ -10,7 +10,7 @@ import StudentList from "@/components/option/StudentList.vue";
 const router = useRouter();
 const notif = useNotif();
 const route = useRoute();
-const kelas = ref({});
+const kelas = ref({ students: [] });
 
 const selectedStudents = ref([]);
 const absensi = ref([]);
@@ -111,7 +111,7 @@ async function getPost() {
 
 onMounted(() => {
   //   kelas.value = props.modelValue;
-  getPost();
+  if (route.params.id) getPost();
 });
 </script>
 <template>
@@ -169,14 +169,14 @@ onMounted(() => {
           </select>
         </div>
 
-        <div class="item-input" v-if="kelas.students && $route.query.type">
+        <div class="item-input" v-if="route.query.type">
           <span>Mahasiswa</span>
           <OptionStudent
             @add="kelas.students.unshift($event)"
             :list="kelas.students"
           />
         </div>
-        <div class="text-center" v-if="$route.query.type">
+        <div class="text-center mt-6" v-if="$route.query.type">
           <button class="btn-lg">Simpan</button>
         </div>
       </form>
@@ -188,6 +188,7 @@ onMounted(() => {
         :absensi="absensi"
         :kelas="kelas"
         :students="kelas?.students"
+        @remove="kelas?.students?.splice($event, 1)"
       >
         <button class="btn" @click="absen()" v-if="!route.query.type">
           Absen
@@ -195,7 +196,7 @@ onMounted(() => {
         <button
           class="btn-danger"
           @click="deleteData()"
-          v-if="route.query.type"
+          v-if="route.query.type && route.params.id"
         >
           Delete
         </button>

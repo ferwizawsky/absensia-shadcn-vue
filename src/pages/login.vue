@@ -20,6 +20,7 @@ onMounted(() => {
     let role_id = Number(localStorage.getItem("role_id"));
     if (role_id == 0) router.push("/");
     if (role_id == 1) router.push("/dosen");
+    if (role_id == 2) router.push("/admin");
   }
 });
 async function login() {
@@ -37,6 +38,7 @@ async function login() {
     // console.log(data);
     if (data?.user?.role_id == 0) router.push("/");
     if (data?.user?.role_id == 1) router.push("/dosen");
+    if (data?.user?.role_id == 2) router.push("/admin");
 
     // router.push("/");
     // router.push("/dosen");

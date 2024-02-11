@@ -29,7 +29,7 @@ let filteredData = computed(() => {
         );
 
   // Limit the results to 15 objects
-  return filteredResults.slice(0, 15);
+  return filteredResults?.slice(0, 15);
 });
 
 watch(
